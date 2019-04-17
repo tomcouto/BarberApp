@@ -6,10 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class RegisterActivity extends AppCompatActivity {
 
     Button registerButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

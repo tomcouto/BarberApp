@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class RegisterFragment extends Fragment {
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     public RegisterFragment() {
         // Required empty public constructor

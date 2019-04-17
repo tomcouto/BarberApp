@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "158924104708",
+    "firebase_url": "https://barber-app-9dbb4.firebaseio.com",
+    "project_id": "barber-app-9dbb4",
+    "storage_bucket": "barber-app-9dbb4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158924104708:android:ba90a421e72ce97b",
+        "android_client_info": {
+          "package_name": "edu.quinnipiac.barberx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "158924104708-66t7f32dquhm4r2eaeg6gmf9e6gnagfk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.quinnipiac.barberx",
+            "certificate_hash": "6d534088fc8c8067931d7937def89382d05b6c2f"
+          }
+        },
+        {
+          "client_id": "158924104708-qtoob2fa4lbvsvdeiao8hk56vhho675i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIIFoKyBjRGf9vvEf--0qQ3D6r-bFns0E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "158924104708-qtoob2fa4lbvsvdeiao8hk56vhho675i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
