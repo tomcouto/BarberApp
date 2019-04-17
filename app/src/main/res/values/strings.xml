@@ -3,7 +3,6 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -12,4 +11,8 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+
+
+    <string name="aboutText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac massa eleifend, auctor eros a, venenatis justo. Nulla velit lectus, luctus venenatis porta sed, maximus nec lacus. Nam feugiat nibh venenatis leo placerat cursus. Integer eget euismod purus, sed sollicitudin sem. Quisque dictum, velit vitae tristique porttitor, velit diam lobortis dui, ac placerat felis risus sit amet est. Etiam maximus quam at libero ornare, a pulvinar nisl mollis. Proin sed sapien eu lorem mattis semper. Integer nec scelerisque felis. </string>
+    <string name="aboutText2">Mauris eleifend egestas sapien, in feugiat quam suscipit et. Cras nec magna orci. Curabitur nunc ex, elementum eget nisl non, pharetra dapibus libero. Maecenas eget consequat dolor. Mauris imperdiet lacinia facilisis. Nunc sagittis ipsum a dictum commodo. Praesent pellentesque arcu a libero varius dictum.</string>
 </resources>

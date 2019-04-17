@@ -1,8 +1,10 @@
 package edu.quinnipiac.barberx;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,14 +25,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -79,20 +73,33 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment prof = new ProfileFragment();
+        Fragment sched = new ScheduleFragment();
+        Fragment abt = new AboutFragment();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.nav_profile) {
+            // Takes user to profile fragment
+            fragmentTransaction.replace(R.id.fragment,prof);
+            fragmentTransaction.commit();
+        } else if (id == R.id.nav_requests) {
+            //Takes user to requests fragment
+        } else if (id == R.id.nav_schedule) {
+            //Takes user to schedule fragment
+            fragmentTransaction.replace(R.id.fragment,sched);
+            fragmentTransaction.commit();
+        } else if (id == R.id.nav_logout) {
+            //Takes user to login page and logs out
+            Intent loginIntent = new Intent(MainActivity.this,LoginActivity.class);
+            startActivity(loginIntent);
+        } else if (id == R.id.nav_about) {
+            //Takes user to about fragment
+            fragmentTransaction.replace(R.id.fragment,abt);
+            fragmentTransaction.commit();
+            System.out.println("about button pressed");
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
