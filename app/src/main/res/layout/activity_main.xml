@@ -22,11 +22,5 @@
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 
-    <fragment
-        android:id="@+id/fragment"
-        android:name="edu.quinnipiac.barberx.ProfileFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        ></fragment>
 
 </android.support.v4.widget.DrawerLayout>
