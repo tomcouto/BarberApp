@@ -1,5 +1,12 @@
 package edu.quinnipiac.barberx;
 
+/**
+ * ScheduleFragment will show a calender and when a date is selected, all appointments accepted
+ * will be shown in a list view ordered by time showing data on the client and when they are coming.
+ *
+ * Version: 1.0
+ * Authors: Tom Couto and Dominic Smorra
+ */
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +23,7 @@ import android.widget.Toast;
 public class ScheduleFragment extends Fragment {
 
     Button requests;
+
     public ScheduleFragment() {
         // Required empty public constructor
     }

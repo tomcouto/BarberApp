@@ -1,5 +1,13 @@
 package edu.quinnipiac.barberx;
 
+/**
+ * MainActivity is the landing activity after logging in. This is where all the fragments will be
+ * displayed after being chosen on the navigation drawer.
+ *
+ * Version: 1.0
+ * Authors: Tom Couto and Dominic Smorra
+ */
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -36,6 +44,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //sets the fragment on start (need to add a statement to avoid rotation reset)
         Fragment frag = new ProfileFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.screen_area, frag).commit();
 
@@ -73,7 +82,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -92,14 +100,14 @@ public class MainActivity extends AppCompatActivity
             fragment = new ScheduleFragment();
         } else if (id == R.id.nav_logout) {
             //Takes user to login page and logs out
-            Intent loginIntent = new Intent(MainActivity.this,LoginActivity.class);
+            Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(loginIntent);
         } else if (id == R.id.nav_about) {
             //Takes user to about fragment
             fragment = new AboutFragment();
         }
 
-        if(fragment != null) {
+        if (fragment != null) {
             FragmentManager fr = getSupportFragmentManager();
             FragmentTransaction ft = fr.beginTransaction();
             ft.replace(R.id.screen_area, fragment);
