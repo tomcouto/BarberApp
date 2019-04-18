@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,6 +35,10 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Fragment frag = new ProfileFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.screen_area, frag).commit();
+
     }
 
     @Override
@@ -72,34 +77,34 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        Fragment fragment = null;
+
         int id = item.getItemId();
-        FragmentManager fm = getSupportFragmentManager();
-        Fragment prof = new ProfileFragment();
-        Fragment sched = new ScheduleFragment();
-        Fragment abt = new AboutFragment();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
         if (id == R.id.nav_profile) {
             // Takes user to profile fragment
-            fragmentTransaction.replace(R.id.fragment,prof);
-            fragmentTransaction.commit();
+            fragment = new ProfileFragment();
         } else if (id == R.id.nav_requests) {
             //Takes user to requests fragment
+            fragment = new RequestFragment();
         } else if (id == R.id.nav_schedule) {
             //Takes user to schedule fragment
-            fragmentTransaction.replace(R.id.fragment,sched);
-            fragmentTransaction.commit();
+            fragment = new ScheduleFragment();
         } else if (id == R.id.nav_logout) {
             //Takes user to login page and logs out
             Intent loginIntent = new Intent(MainActivity.this,LoginActivity.class);
             startActivity(loginIntent);
         } else if (id == R.id.nav_about) {
             //Takes user to about fragment
-            fragmentTransaction.replace(R.id.fragment,abt);
-            fragmentTransaction.commit();
-            System.out.println("about button pressed");
+            fragment = new AboutFragment();
         }
 
+        if(fragment != null) {
+            FragmentManager fr = getSupportFragmentManager();
+            FragmentTransaction ft = fr.beginTransaction();
+            ft.replace(R.id.screen_area, fragment);
+            ft.commit();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

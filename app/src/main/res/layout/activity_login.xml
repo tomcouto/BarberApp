@@ -31,7 +31,7 @@
         android:background="#ffffff"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/black" />
 
     <Button
         android:id="@+id/login_button"
