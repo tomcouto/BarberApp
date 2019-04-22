@@ -22,8 +22,6 @@ import android.widget.Toast;
 
 public class ScheduleFragment extends Fragment {
 
-    Button requests;
-
     public ScheduleFragment() {
         // Required empty public constructor
     }
@@ -31,16 +29,7 @@ public class ScheduleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        requests = (Button) getView().findViewById(R.id.requests);
-//        requests.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FragmentManager fr = getSupportFragmentManager();
-//                FragmentTransaction ft = fr.beginTransaction();
-//                ft.replace(R.id.screen_area, new RequestFragment());
-//                ft.commit();
-//            }
-//        });
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_schedule, container, false);
     }
