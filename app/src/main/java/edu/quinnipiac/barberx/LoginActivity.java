@@ -1,5 +1,14 @@
 package edu.quinnipiac.barberx;
 
+/**
+ * LoginActivity is where a barber will login to the application using their email address and password
+ * and the information entered will then be checked with the database to make sure a user with those credentials does in fact exist.
+ * If the user does exist, they will then be sent to the MainActivity. If not, a toast will appear alerting the user that they entered
+ * invalid information.
+ * Version: 1.0
+ * Authors: Tom Couto and Dominic Smorra
+ */
+
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -59,8 +68,10 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
+                            //if there is a user with the entered email
                             if (document.exists()) {
                                 Map<String, Object> data = document.getData();
+                                //if the password is correct
                                 if(data.containsValue(password)){
                                     Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(loginIntent);
@@ -68,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.makeText(LoginActivity.this,"Username or Password Invalid.", Toast.LENGTH_LONG).show();
                                 }
                             } else {
-
+                                Toast.makeText(LoginActivity.this,"Username or Password Invalid.", Toast.LENGTH_LONG).show();
                             }
                         } else {
                         }
