@@ -22,12 +22,15 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Collection;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
@@ -60,9 +63,25 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = emailText.getText().toString();
+                final String email = emailText.getText().toString();
                 final String password = passwordText.getText().toString();
-                DocumentReference docRef = db.collection("users").document(email);
+
+//                CollectionReference colRef = db.collection("users");
+//
+//                Query query = colRef.whereEqualTo("email",email).whereEqualTo("password",password);
+//                query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if(task.isSuccessful()){
+//                            for (QueryDocumentSnapshot document: task.getResult()){
+//
+//                            }
+//                        }
+//                    }
+//                });
+
+                DocumentReference docRef = db.collection("users")
+                        .document(email);
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -73,7 +92,11 @@ public class LoginActivity extends AppCompatActivity {
                                 Map<String, Object> data = document.getData();
                                 //if the password is correct
                                 if(data.containsValue(password)){
+                                    AccountHandler handler = new AccountHandler();
+                                    handler.setEmail(email);
+                                    Log.d("TAG HELLO", "Cached document data: " + document.getData());
                                     Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
+                                    loginIntent.putExtra("email", email);
                                     startActivity(loginIntent);
                                 } else {
                                     Toast.makeText(LoginActivity.this,"Username or Password Invalid.", Toast.LENGTH_LONG).show();

@@ -18,6 +18,9 @@ import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
+import com.google.firebase.Timestamp;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -59,6 +62,9 @@ public class ScheduleFragment extends Fragment {
         List<HashMap<String, String>> listItems = new ArrayList<>();
         mCalendarView = (CalendarView) v.findViewById(R.id.calendarView);
         lv = (ListView) v.findViewById(R.id.listview_lv);
+
+        HashMap<Timestamp, String> appointments;
+
 
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override

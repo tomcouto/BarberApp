@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,18 +81,27 @@ public class RegisterActivity extends AppCompatActivity {
                     barber.put("email", emailText.getText().toString());
                     barber.put("username", usernameText.getText().toString());
                     barber.put("address", addressText.getText().toString());
+                    ArrayList<HashMap<String, Object>> appointments = new ArrayList<HashMap<String, Object>>();
+                    barber.put("appointments", appointments);
 
 
-                    db.collection("users")
-                            .add(barber)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    db.collection("users").document(emailText.getText().toString())
+                            .set(barber)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Log.d("TAG", "DocumentSnapshot added with ID: " + documentReference.getId());
+                                public void onSuccess(Void aVoid) {
                                     Intent registerIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                                     startActivity(registerIntent);
                                 }
                             })
+//                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                                @Override
+//                                public void onSuccess(DocumentReference documentReference) {
+//                                    Log.d("TAG", "DocumentSnapshot added with ID: " + documentReference.getId());
+//                                    Intent registerIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+//                                    startActivity(registerIntent);
+//                                }
+//                            })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
