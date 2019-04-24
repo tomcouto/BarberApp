@@ -2,6 +2,7 @@ package edu.quinnipiac.barberx;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -18,8 +19,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class AccountHandler {
@@ -65,11 +68,22 @@ public class AccountHandler {
                         for (HashMap<String, Object> appt: appts
                              ) {
                             Timestamp stamp = (Timestamp) (appt.get("date"));
+
+
+                            Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+                            cal.setTimeInMillis(stamp.getSeconds() * 1000L);
+                            String date = DateFormat.format("dd-MM-yyyy hh:mm:ss", cal).toString();
                             //convert date
-                            Date date = new Date(stamp.toString());
-                            SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                            String fullDate = sfd.format(date);
-                            String[] dateArr = fullDate.split(" ");
+//                            Calendar c = Calendar.getInstance();
+//                            c.setTimeInMillis(stamp);
+//                            Date d = c.getTime();
+                            //Date date =
+                            //Date date = new Date(stamp.toString());
+                            //SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                            //String fullDate = sfd.format(date);
+                            Log.d("TAG DATEE", "Cached document data: " + date);
+
+                            String[] dateArr = date.split(" ");
 
                             String name = (String) appt.get("user");
                             map.put(dateArr[1], name);
