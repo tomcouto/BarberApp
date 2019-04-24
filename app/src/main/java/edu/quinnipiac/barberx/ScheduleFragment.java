@@ -9,6 +9,7 @@ package edu.quinnipiac.barberx;
  */
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -65,7 +66,6 @@ public class ScheduleFragment extends Fragment {
 
         HashMap<Timestamp, String> appointments;
 
-
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
@@ -85,12 +85,12 @@ public class ScheduleFragment extends Fragment {
         SimpleAdapter adapter = new SimpleAdapter(this.getContext(),listItems, R.layout.list_item,
                 new String[]{"First Line", "Second Line"}, new int[]{R.id.list_text1, R.id.list_text2});
 
-        Iterator it = appts.entrySet().iterator();
+        Iterator it = handler.map.entrySet().iterator();
         while(it.hasNext()) {
             HashMap<String, String> resultsMap = new HashMap<>();
             Map.Entry pair = (Map.Entry) it.next();
-            resultsMap.put("First Line", pair.getKey().toString());
-            resultsMap.put("Second Line", pair.getValue().toString());
+            resultsMap.put("First Line", pair.getValue().toString());
+            resultsMap.put("Second Line", pair.getKey().toString());
             listItems.add(resultsMap);
         }
         lv.setAdapter(adapter);

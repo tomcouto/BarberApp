@@ -42,10 +42,8 @@ public class MainActivity extends AppCompatActivity
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
         AccountHandler handler = new AccountHandler();
-        //handler.pullDBAppointments(email);
         handler.pullDBAppointments(email);
        // Log.d("TAG APPTS", appointments.toString());
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

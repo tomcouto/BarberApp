@@ -2,6 +2,7 @@ package edu.quinnipiac.barberx;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -15,7 +16,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +27,7 @@ public class AccountHandler {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Object appointments;
     ArrayList<HashMap<String, Object>> appts;
-    HashMap<Timestamp, String> map = new HashMap<>();
+    HashMap<String, String> map = new HashMap<>();
     Boolean done = false;
 
     public AccountHandler(){
@@ -61,15 +64,20 @@ public class AccountHandler {
 
                         for (HashMap<String, Object> appt: appts
                              ) {
-                            Timestamp stamp = (Timestamp) appt.get("date");
+                            Timestamp stamp = (Timestamp) (appt.get("date"));
+                            //convert date
+                            Date date = new Date(stamp.toString());
+                            SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                            String fullDate = sfd.format(date);
+                            String[] dateArr = fullDate.split(" ");
+
                             String name = (String) appt.get("user");
-                            map.put(stamp, name);
+                            map.put(dateArr[1], name);
+                            System.out.println("map:" + map);
                         }
                         done = true;
 
                         Log.d("TAG MAPPP", "Cached document data: " + map.toString());
-
-
 
 
                     } else {
@@ -81,13 +89,7 @@ public class AccountHandler {
         });
 
         Log.d("TAG LISTTT", "hello");
-
-
     }
-
-
-
-
 
 
     //local account details
