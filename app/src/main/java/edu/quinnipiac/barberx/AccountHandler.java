@@ -32,8 +32,23 @@ public class AccountHandler {
     ArrayList<HashMap<String, Object>> appts;
     HashMap<String, String> map = new HashMap<>();
     Boolean done = false;
+    HashMap<String, String> fakeRequests = new HashMap<>();
+
+    HashMap<String, String> fakeMap = new HashMap<>();
 
     public AccountHandler(){
+        fakeMap.put("11:00 AM","Mike");
+        fakeMap.put("12:00 PM","John");
+        fakeMap.put("1:00 PM", "Phil");
+        fakeMap.put("2:00 PM", "Pete");
+        fakeMap.put("3:00 PM", "Matt");
+
+        fakeRequests.put("9:00 AM", "Alex");
+        fakeRequests.put("10:00 AM", "Joe");
+        fakeRequests.put("11:00 AM", "Brian");
+        fakeRequests.put("12:00 PM", "Greg");
+        fakeRequests.put("1:00 PM", "Chris");
+        fakeRequests.put("2:00 PM", "Tom");
 
     }
 
@@ -69,25 +84,16 @@ public class AccountHandler {
                              ) {
                             Timestamp stamp = (Timestamp) (appt.get("date"));
 
-
                             Calendar cal = Calendar.getInstance(Locale.ENGLISH);
                             cal.setTimeInMillis(stamp.getSeconds() * 1000L);
                             String date = DateFormat.format("dd-MM-yyyy hh:mm:ss", cal).toString();
-                            //convert date
-//                            Calendar c = Calendar.getInstance();
-//                            c.setTimeInMillis(stamp);
-//                            Date d = c.getTime();
-                            //Date date =
-                            //Date date = new Date(stamp.toString());
-                            //SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                            //String fullDate = sfd.format(date);
+
                             Log.d("TAG DATEE", "Cached document data: " + date);
 
                             String[] dateArr = date.split(" ");
 
                             String name = (String) appt.get("user");
                             map.put(dateArr[1], name);
-                            System.out.println("map:" + map);
                         }
                         done = true;
 
@@ -105,30 +111,10 @@ public class AccountHandler {
         Log.d("TAG LISTTT", "hello");
     }
 
-
     //local account details
     ArrayList<String> accountDetails = new ArrayList<>();
-    //save every name in the list based on date
-    String[] names = new String[] {"Phil", "John", "Joe", "Mike", "Bill", "Tom"};
-    //save the time of each person
-    String[] times = new String[] {"8","9","10","11","12","1"};
-
-
-    //returns the local username
-    public String getUsername(int i){ return names[i]; }
 
     //return local email
     public String getEmail() { return null; }
 
-    public int getAppointments() {return names.length;}
-
-    public String getTime(int i) {return times[i];}
-
-    //return profile picture
-
-    //return all requests
-
-    //return schedule
-
-    //return all uploaded images for profile page
 }

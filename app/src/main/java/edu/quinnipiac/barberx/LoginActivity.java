@@ -95,6 +95,8 @@ public class LoginActivity extends AppCompatActivity {
                                     AccountHandler handler = new AccountHandler();
                                     handler.setEmail(email);
                                     Log.d("TAG HELLO", "Cached document data: " + document.getData());
+                                    Bundle args = new Bundle();
+                                    args.putString("email", email);
                                     Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
                                     loginIntent.putExtra("email", email);
                                     startActivity(loginIntent);

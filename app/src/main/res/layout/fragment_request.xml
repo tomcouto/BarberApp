@@ -3,10 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RequestFragment">
+    android:orientation="vertical"
+    tools:context=".RequestFragment" >
 
-
-    <android.support.v7.widget.RecyclerView
+    <Button
+        android:id="@+id/accept_btn"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:text="Accept" />
+
+    <Button
+        android:id="@+id/decline_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Decline" />
+
+    <ListView
+        android:id="@+id/listview_r"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+
 </LinearLayout>

@@ -9,19 +9,14 @@ package edu.quinnipiac.barberx;
  */
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-
-import com.google.firebase.Timestamp;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -36,10 +31,7 @@ public class ScheduleFragment extends Fragment {
     private CalendarView mCalendarView;
     public ArrayList<Integer> dateList = new ArrayList<>();
     ListView lv;
-    ArrayList<String> arrayList;
-    ArrayAdapter<String> adapter;
     AccountHandler handler = new AccountHandler();
-    ArrayList<String> usernames = new ArrayList<>();
 
     public ScheduleFragment() {
         // Required empty public constructor
@@ -50,21 +42,9 @@ public class ScheduleFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_schedule, container, false);
 
-        for(int i = 0; i < handler.getAppointments(); i++) {
-            usernames.add(handler.getUsername(i));
-        }
-
-        //create and populate hashmap
-        HashMap<String, String> appts = new HashMap<>();
-        for(int i = 0; i < handler.getAppointments(); i++) {
-            appts.put(usernames.get(i), handler.getTime(i) + ":00");
-        }
-
         List<HashMap<String, String>> listItems = new ArrayList<>();
         mCalendarView = (CalendarView) v.findViewById(R.id.calendarView);
         lv = (ListView) v.findViewById(R.id.listview_lv);
-
-        HashMap<Timestamp, String> appointments;
 
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -79,21 +59,24 @@ public class ScheduleFragment extends Fragment {
                     dateList.add(dayOfMonth);
                     dateList.add(year);
                 }
+                System.out.println(dateList.toString());
             }
         });
 
         SimpleAdapter adapter = new SimpleAdapter(this.getContext(),listItems, R.layout.list_item,
                 new String[]{"First Line", "Second Line"}, new int[]{R.id.list_text1, R.id.list_text2});
+        Iterator it = handler.fakeMap.entrySet().iterator();
 
-        Iterator it = handler.map.entrySet().iterator();
         while(it.hasNext()) {
             HashMap<String, String> resultsMap = new HashMap<>();
             Map.Entry pair = (Map.Entry) it.next();
-            resultsMap.put("First Line", pair.getValue().toString());
-            resultsMap.put("Second Line", pair.getKey().toString());
+            resultsMap.put("First Line", pair.getKey().toString());
+            resultsMap.put("Second Line", pair.getValue().toString());
             listItems.add(resultsMap);
         }
+
         lv.setAdapter(adapter);
+        System.out.println("map 2" + handler.map);
         // Inflate the layout for this fragment
         return v;
     }
