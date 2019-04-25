@@ -23,17 +23,9 @@ public class AccountHandler {
     ArrayList<HashMap<String, Object>> appts;
     HashMap<String, String> map = new HashMap<>();
     Boolean done = false;
-    HashMap<String, String> fakeRequests = new HashMap<>();
 
 
     public AccountHandler(){
-
-        fakeRequests.put("9:00 AM", "Alex");
-        fakeRequests.put("10:00 AM", "Joe");
-        fakeRequests.put("11:00 AM", "Brian");
-        fakeRequests.put("12:00 PM", "Greg");
-        fakeRequests.put("1:00 PM", "Chris");
-        fakeRequests.put("2:00 PM", "Tom");
 
     }
 
