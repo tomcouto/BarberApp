@@ -13,18 +13,37 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 public class ProfileFragment extends Fragment {
+
+    TextView username;
+    TextView nav_email;
 
     public ProfileFragment() {
         // Required empty public constructor
     }
 
+    public static ProfileFragment newInstance(Bundle bundle) {
+        Bundle bundle1 = bundle;
+        ProfileFragment profileFragment = new ProfileFragment();
+        profileFragment.setArguments(bundle1);
+        return profileFragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_profile, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+
+        username = v.findViewById(R.id.profileUsername);
+        String email = getArguments().getString("email");
+        if(email != null) { username.setText(email); }
+        else{ System.out.println("Email is null");}
+
+        return v;
+
     }
 }

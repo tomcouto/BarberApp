@@ -21,16 +21,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.Collection;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
@@ -66,6 +60,8 @@ public class LoginActivity extends AppCompatActivity {
                 final String email = emailText.getText().toString();
                 final String password = passwordText.getText().toString();
 
+
+
 //                CollectionReference colRef = db.collection("users");
 //
 //                Query query = colRef.whereEqualTo("email",email).whereEqualTo("password",password);
@@ -95,8 +91,6 @@ public class LoginActivity extends AppCompatActivity {
                                     AccountHandler handler = new AccountHandler();
                                     handler.setEmail(email);
                                     Log.d("TAG HELLO", "Cached document data: " + document.getData());
-                                    Bundle args = new Bundle();
-                                    args.putString("email", email);
                                     Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
                                     loginIntent.putExtra("email", email);
                                     startActivity(loginIntent);

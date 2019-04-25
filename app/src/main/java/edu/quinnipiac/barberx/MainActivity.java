@@ -26,6 +26,8 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    Bundle args;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
+        args = intent.getExtras();
         AccountHandler handler = new AccountHandler();
         handler.pullDBAppointments(email);
        // Log.d("TAG APPTS", appointments.toString());
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //sets the fragment on start (need to add a statement to avoid rotation reset)
-        Fragment frag = new ProfileFragment();
+        Fragment frag = new ProfileFragment().newInstance(args);
         getSupportFragmentManager().beginTransaction().replace(R.id.screen_area, frag).commit();
 
     }
@@ -94,13 +97,13 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_profile) {
             // Takes user to profile fragment
-            fragment = new ProfileFragment();
+            fragment = new ProfileFragment().newInstance(args);
         } else if (id == R.id.nav_requests) {
             //Takes user to requests fragment
-            fragment = new RequestFragment();
+            fragment = new RequestFragment().newInstance(args);
         } else if (id == R.id.nav_schedule) {
             //Takes user to schedule fragment
-            fragment = new ScheduleFragment();
+            fragment = new ScheduleFragment().newInstance(args);
         } else if (id == R.id.nav_logout) {
             //Takes user to login page and logs out
             Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
