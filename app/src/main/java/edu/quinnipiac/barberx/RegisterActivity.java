@@ -81,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
                     barber.put("email", emailText.getText().toString());
                     barber.put("username", usernameText.getText().toString());
                     barber.put("address", addressText.getText().toString());
+                    barber.put("password", passwordText.getText().toString());
                     ArrayList<HashMap<String, Object>> appointments = new ArrayList<HashMap<String, Object>>();
                     barber.put("appointments", appointments);
 
