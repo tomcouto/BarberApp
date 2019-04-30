@@ -4,7 +4,7 @@ package edu.quinnipiac.barberx;
  * RequestFragment is where the user will see all requests to be put on their schedule shown
  * in a recycler view. Once there is requests the recycler view the user can accept/deny them.
  * If accepted the request will be added to the schedule and deleted. If declined it will be deleted.
- *
+ * <p>
  * Version: 1.0
  * Authors: Tom Couto and Dominic Smorra
  */
@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,14 +28,17 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Queue;
 
 public class RequestFragment extends Fragment {
 
@@ -64,6 +68,9 @@ public class RequestFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_request, container, false);
         lv = (ListView) v.findViewById(R.id.listview_r);
 
+        accept = (Button) v.findViewById(R.id.accept_btn);
+        decline = (Button) v.findViewById(R.id.decline_btn);
+
         final List<HashMap<String, String>> listItems = new ArrayList<>();
 
         DocumentReference docRef = db.collection("users")
@@ -81,7 +88,7 @@ public class RequestFragment extends Fragment {
                         reqs = (ArrayList<HashMap<String, Object>>) data.get("requests");
                         Log.d("TAG LISTTT", "Cached document data: " + reqs.toString());
 
-                        for (HashMap<String, Object> reqs: reqs
+                        for (HashMap<String, Object> reqs : reqs
                         ) {
                             Timestamp stamp = (Timestamp) (reqs.get("date"));
 
@@ -100,11 +107,11 @@ public class RequestFragment extends Fragment {
 
                         Log.d("TAG MAPPP", "Cached document data: " + map.toString());
 
-                        SimpleAdapter adapter = new SimpleAdapter(getContext(),listItems, R.layout.list_item,
+                        final SimpleAdapter adapter = new SimpleAdapter(getContext(), listItems, R.layout.list_item,
                                 new String[]{"First Line", "Second Line"}, new int[]{R.id.list_text1, R.id.list_text2});
                         Iterator it = map.entrySet().iterator();
 
-                        while(it.hasNext()) {
+                        while (it.hasNext()) {
                             HashMap<String, String> resultsMap = new HashMap<>();
                             Map.Entry pair = (Map.Entry) it.next();
                             resultsMap.put("First Line", pair.getValue().toString());
@@ -112,27 +119,54 @@ public class RequestFragment extends Fragment {
                             listItems.add(resultsMap);
                         }
 
+                        //set click listener for accept button
+                        accept.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(listItems.isEmpty()) {
+                                    Toast.makeText(getContext(), "No More Requests", Toast.LENGTH_LONG).show();
+                                } else {
+                                    //add top value to databse list of appointments
+
+                                    //remove from database list of requests
+
+                                    //remove from listview and update adapter
+                                    listItems.remove(0);
+                                    adapter.notifyDataSetChanged();
+                                    Log.d("TAG MAPPP New", "Cached document data: " + listItems.toString());
+
+                                    //show toast for accepted
+                                    Toast.makeText(getContext(), "Accepted Request", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+
+                        //set click listener for decline button
+                        decline.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(listItems.isEmpty()) {
+                                    Toast.makeText(getContext(), "No More Requests", Toast.LENGTH_LONG).show();
+                                } else {
+                                    //remove top value from requests lis
+
+                                    //remove from listview and update adapter
+                                    listItems.remove(0);
+                                    adapter.notifyDataSetChanged();
+                                    Log.d("TAG MAPPP New", "Cached document data: " + listItems.toString());
+
+                                    //show toast for declined
+                                    Toast.makeText(getContext(), "Declined Request", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+
                         lv.setAdapter(adapter);
-
-
                     }
                 } else {
                 }
             }
         });
-//        accept.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getContext(), "Accepted Request", Toast.LENGTH_LONG).show();
-//            }
-//        });
-//
-//        decline.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getContext(),"Declined Request", Toast.LENGTH_LONG).show();
-//            }
-//        });
 
         return v;
     }
