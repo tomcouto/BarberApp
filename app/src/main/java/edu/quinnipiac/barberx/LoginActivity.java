@@ -61,21 +61,6 @@ public class LoginActivity extends AppCompatActivity {
                 final String password = passwordText.getText().toString();
 
 
-
-//                CollectionReference colRef = db.collection("users");
-//
-//                Query query = colRef.whereEqualTo("email",email).whereEqualTo("password",password);
-//                query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if(task.isSuccessful()){
-//                            for (QueryDocumentSnapshot document: task.getResult()){
-//
-//                            }
-//                        }
-//                    }
-//                });
-
                 DocumentReference docRef = db.collection("users")
                         .document(email);
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

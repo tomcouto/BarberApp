@@ -148,7 +148,7 @@ public class RequestFragment extends Fragment {
                                 if(listItems.isEmpty()) {
                                     Toast.makeText(getContext(), "No More Requests", Toast.LENGTH_LONG).show();
                                 } else {
-                                    //remove top value from requests lis
+                                    //remove top value from requests list
 
                                     //remove from listview and update adapter
                                     listItems.remove(0);

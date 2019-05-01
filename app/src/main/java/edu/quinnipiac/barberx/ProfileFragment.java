@@ -8,18 +8,21 @@ package edu.quinnipiac.barberx;
  */
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment{
 
     TextView username;
-    TextView nav_email;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -44,6 +47,5 @@ public class ProfileFragment extends Fragment {
         else{ System.out.println("Email is null");}
 
         return v;
-
     }
 }

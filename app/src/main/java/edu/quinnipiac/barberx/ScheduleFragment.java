@@ -3,7 +3,7 @@ package edu.quinnipiac.barberx;
 /**
  * ScheduleFragment will show a calender and when a date is selected, all appointments accepted
  * will be shown in a list view ordered by time showing data on the client and when they are coming.
- *
+ * <p>
  * Version: 1.0
  * Authors: Tom Couto and Dominic Smorra
  */
@@ -48,6 +48,7 @@ public class ScheduleFragment extends Fragment {
     ArrayList<HashMap<String, Object>> appts;
     HashMap<String, String> map = new HashMap<>();
     Boolean done = false;
+    ArrayList<String> pullDateList;
 
     public ScheduleFragment() {
         // Required empty public constructor
@@ -67,25 +68,9 @@ public class ScheduleFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_schedule, container, false);
 
         final List<HashMap<String, String>> listItems = new ArrayList<>();
+
         mCalendarView = (CalendarView) v.findViewById(R.id.calendarView);
         lv = (ListView) v.findViewById(R.id.listview_lv);
-
-        mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                if(dateList.isEmpty()) {
-                    dateList.add(month);
-                    dateList.add(dayOfMonth);
-                    dateList.add(year);
-                } else {
-                    dateList.clear();
-                    dateList.add(month);
-                    dateList.add(dayOfMonth);
-                    dateList.add(year);
-                }
-                System.out.println(dateList.toString());
-            }
-        });
 
         DocumentReference docRef = db.collection("users")
                 .document(getArguments().getString("email"));
@@ -102,7 +87,7 @@ public class ScheduleFragment extends Fragment {
                         appts = (ArrayList<HashMap<String, Object>>) data.get("appointments");
                         Log.d("TAG LISTTT", "Cached document data: " + appts.toString());
 
-                        for (HashMap<String, Object> appt: appts
+                        for (HashMap<String, Object> appt : appts
                         ) {
                             Timestamp stamp = (Timestamp) (appt.get("date"));
 
@@ -116,22 +101,43 @@ public class ScheduleFragment extends Fragment {
 
                             String name = (String) appt.get("user");
                             map.put(dateArr[1], name);
+                            System.out.println("Date List: " + dateArr);
                         }
                         done = true;
 
                         Log.d("TAG MAPPP", "Cached document data: " + map.toString());
 
-                        SimpleAdapter adapter = new SimpleAdapter(getContext(),listItems, R.layout.list_item,
+                        SimpleAdapter adapter = new SimpleAdapter(getContext(), listItems, R.layout.list_item,
                                 new String[]{"First Line", "Second Line"}, new int[]{R.id.list_text1, R.id.list_text2});
                         Iterator it = map.entrySet().iterator();
 
-                        while(it.hasNext()) {
+                        while (it.hasNext()) {
                             HashMap<String, String> resultsMap = new HashMap<>();
                             Map.Entry pair = (Map.Entry) it.next();
                             resultsMap.put("First Line", pair.getValue().toString());
                             resultsMap.put("Second Line", pair.getKey().toString());
                             listItems.add(resultsMap);
                         }
+
+                        mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                            @Override
+                            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                                if (dateList.isEmpty()) {
+                                    dateList.add(dayOfMonth);
+                                    dateList.add(month);
+                                    dateList.add(year);
+                                } else {
+                                    dateList.clear();
+                                    dateList.add(dayOfMonth);
+                                    dateList.add(month);
+                                    dateList.add(year);
+                                }
+                                String date = dateList.toString().replace(", ", "-").replace("[", "").replace("]", "").trim();
+                                System.out.println("Date: " + date);
+
+
+                            }
+                        });
 
                         lv.setAdapter(adapter);
 
