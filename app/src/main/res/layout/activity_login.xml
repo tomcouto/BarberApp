@@ -16,9 +16,11 @@
         android:layout_marginTop="15dp"
         android:layout_marginLeft="75dp"
         android:layout_marginRight="75dp"
-        android:background="#ffffff"
+        android:background="@drawable/rounded_edittext"
+        android:textAlignment="center"
         android:inputType="textPassword"
-        android:hint="@string/password"/>
+        android:hint="@string/password"
+        />
 
     <EditText
         android:id="@+id/email"
@@ -28,8 +30,9 @@
         android:layout_marginLeft="75dp"
         android:layout_marginTop="300dp"
         android:layout_marginRight="75dp"
-        android:background="#ffffff"
+        android:background="@drawable/rounded_edittext"
         android:hint="@string/email"
+        android:textAlignment="center"
         android:inputType="textEmailAddress"
         android:textColor="@android:color/black" />
 
@@ -37,8 +40,10 @@
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/remember"
+        android:layout_below="@+id/password"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/mainColor"
         android:text="Login" />
 
     <Button
@@ -46,17 +51,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/login_button"
-        android:text="Register" />
-
-    <CheckBox
-        android:id="@+id/remember"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_toRightOf="@+id/login_button"
         android:layout_below="@+id/password"
-        android:layout_marginTop="10dp"
-        android:background="#ffffff"
-        android:text="Remember Login " />
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/mainColor"
+        android:text="Register" />
 
 </RelativeLayout>
