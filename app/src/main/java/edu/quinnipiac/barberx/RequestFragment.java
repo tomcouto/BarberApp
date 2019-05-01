@@ -45,6 +45,7 @@ public class RequestFragment extends Fragment {
     ListView lv;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayList<HashMap<String, Object>> reqs;
+    ArrayList<HashMap<String, Object>> appts;
     HashMap<String, String> map = new HashMap<>();
     Boolean done = false;
     Button accept;
@@ -86,6 +87,7 @@ public class RequestFragment extends Fragment {
                         Map<String, Object> data = document.getData();
 
                         reqs = (ArrayList<HashMap<String, Object>>) data.get("requests");
+                        appts = (ArrayList<HashMap<String, Object>>) data.get("appointments");
                         Log.d("TAG LISTTT", "Cached document data: " + reqs.toString());
 
                         for (HashMap<String, Object> reqs : reqs
@@ -129,6 +131,13 @@ public class RequestFragment extends Fragment {
                                     //add top value to databse list of appointments
 
                                     //remove from database list of requests
+                                    appts.add(reqs.get(0));
+                                    reqs.remove(0);
+                                    db.collection("users").document(getArguments().getString("email"))
+                                            .update(
+                                                    "requests", reqs,
+                                                    "appointments", appts
+                                            );
 
                                     //remove from listview and update adapter
                                     listItems.remove(0);
@@ -148,6 +157,12 @@ public class RequestFragment extends Fragment {
                                 if(listItems.isEmpty()) {
                                     Toast.makeText(getContext(), "No More Requests", Toast.LENGTH_LONG).show();
                                 } else {
+
+                                    reqs.remove(0);
+                                    db.collection("users").document(getArguments().getString("email"))
+                                            .update(
+                                                    "requests", reqs
+                                            );
                                     //remove top value from requests list
 
                                     //remove from listview and update adapter
