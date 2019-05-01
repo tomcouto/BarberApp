@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -48,7 +49,8 @@ public class ScheduleFragment extends Fragment {
     ArrayList<HashMap<String, Object>> appts;
     HashMap<String, String> map = new HashMap<>();
     Boolean done = false;
-    ArrayList<String> pullDateList;
+    HashMap<String, HashMap<String, String>> datesMap = new HashMap<String, HashMap<String, String>>();
+
 
     public ScheduleFragment() {
         // Required empty public constructor
@@ -99,6 +101,22 @@ public class ScheduleFragment extends Fragment {
 
                             String[] dateArr = date.split(" ");
 
+                            Log.d("TAG ARRAY", dateArr[0]);
+
+                            if (datesMap.containsKey(dateArr[0])) {
+                                HashMap<String, String> mp = datesMap.get(dateArr[0]);
+                                mp.put(dateArr[1], (String) appt.get("user"));
+                                datesMap.put(dateArr[0], mp);
+
+                            } else {
+                                HashMap<String, String> mp = new HashMap<>();
+                                datesMap.put(dateArr[0], mp);
+                                mp.put(dateArr[1], (String) appt.get("user"));
+
+                                //datesMap.put(dateArr[0], mp);
+                            }
+
+
                             String name = (String) appt.get("user");
                             map.put(dateArr[1], name);
                             System.out.println("Date List: " + dateArr);
@@ -107,7 +125,7 @@ public class ScheduleFragment extends Fragment {
 
                         Log.d("TAG MAPPP", "Cached document data: " + map.toString());
 
-                        SimpleAdapter adapter = new SimpleAdapter(getContext(), listItems, R.layout.list_item,
+                        final SimpleAdapter adapter = new SimpleAdapter(getContext(), listItems, R.layout.list_item,
                                 new String[]{"First Line", "Second Line"}, new int[]{R.id.list_text1, R.id.list_text2});
                         Iterator it = map.entrySet().iterator();
 
@@ -116,6 +134,7 @@ public class ScheduleFragment extends Fragment {
                             Map.Entry pair = (Map.Entry) it.next();
                             resultsMap.put("First Line", pair.getValue().toString());
                             resultsMap.put("Second Line", pair.getKey().toString());
+
                             listItems.add(resultsMap);
                         }
 
@@ -133,9 +152,36 @@ public class ScheduleFragment extends Fragment {
                                     dateList.add(year);
                                 }
                                 String date = dateList.toString().replace(", ", "-").replace("[", "").replace("]", "").trim();
+                                String[] rightDate = date.split("-",3);
+                                if(Integer.parseInt(rightDate[0]) < 10){
+                                    rightDate[0] = ("0" + rightDate[0]);
+                                }
+                                if(Integer.parseInt(rightDate[1]) < 10){
+                                    int m = Integer.parseInt(rightDate[1]) + 1;
+                                    rightDate[1] = ("0" + String.valueOf(m));
+                                }
+                                date = rightDate[0] + "-" + rightDate[1] + "-" + rightDate[2];
                                 System.out.println("Date: " + date);
 
+//                                for (String time : users.keySet()) {
+//                                    String name = users.get(time);
+//                                }
 
+                                if(datesMap.containsKey(date)) {
+                                    HashMap<String, String> users = datesMap.get(date);
+                                    listItems.clear();
+                                    Iterator it = users.entrySet().iterator();
+                                    while (it.hasNext()) {
+                                        HashMap<String, String> resultsMap = new HashMap<>();
+                                        Map.Entry pair = (Map.Entry) it.next();
+                                        resultsMap.put("First Line", pair.getValue().toString());
+                                        resultsMap.put("Second Line", pair.getKey().toString());
+                                        listItems.add(resultsMap);
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                } else {
+                                    Toast.makeText(getContext(), "No Appointments On This Day!", Toast.LENGTH_LONG).show();
+                                }
                             }
                         });
 
